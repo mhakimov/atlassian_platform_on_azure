@@ -6,8 +6,8 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
   # private_cluster_enabled = true
   #TODO: revert it back to Private, once I change Azur subscription or enhance vCPU limit to be able to deploy vm bastion
-  dns_prefix              = "aks-public"
-  private_cluster_enabled = false
+  dns_prefix = "aks-public"
+  #private_cluster_enabled = false
 
   #   api_server_authorized_ip_ranges = [
   #   "YOUR_PUBLIC_IP/32"
@@ -19,6 +19,12 @@ resource "azurerm_kubernetes_cluster" "aks" {
     vm_size    = "Standard_DC2s_v3"
     # vm_size        = "Standard_B1ms"
     vnet_subnet_id = azurerm_subnet.aks.id
+
+    upgrade_settings {
+      max_surge                     = "10%"
+      drain_timeout_in_minutes      = 0
+      node_soak_duration_in_minutes = 0
+    }
   }
 
   identity {
@@ -36,9 +42,10 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
   network_profile {
     network_plugin = "azure"
+    network_policy = "azure"
+
     # outbound_type  = "userDefinedRouting"
     outbound_type = "loadBalancer"
-
   }
 }
 
