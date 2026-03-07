@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: jira
-  namespace: jira
+  # namespace: jira
 spec:
   replicas: 1
   selector:
