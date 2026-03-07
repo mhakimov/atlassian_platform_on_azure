@@ -9,8 +9,7 @@ This project demonstrates how to create and evolve a Kubernetes platform on **Az
 
 **Secure Jira** is a self-hosted Jira solution running on **Azure Kubernetes Service (AKS)**, designed for organisations that cannot use SaaS tools like Jira Cloud, and require strict compliance, data sovereignty, and enterprise-grade security.
 
-
-## Business scenario features:
+## Business Scenario Features:
 
 - Full Jira functionality in a self-managed environment  
 - Deployment on **Azure AKS** for scalability and reliability  
@@ -24,7 +23,7 @@ The example workload is **Jira**, but the cluster is designed so you can easily 
 
 ## Learning Philosophy
 
-Kubernetes platforms can feel overwhelming. Instead of dumping a full production setup in one repository, this project teaches AKS **progressively**:
+Kubernetes platforms can feel overwhelming. Instead of dumping a full production setup in one repository, this project teaches AKS progressively:
 
 1. Start with a minimal cluster
 2. Deploy a real application
@@ -32,8 +31,6 @@ Kubernetes platforms can feel overwhelming. Instead of dumping a full production
 4. Learn each concept in isolation
 
 Each **branch represents a learning stage**.
-
-You can explore the project sequentially without being buried in Kubernetes complexity.
 
 ---
 
@@ -47,7 +44,7 @@ More stages coming soon as the platform evolves.
 
 ---
 
-## ⚙️ Technologies
+## Technologies
 
 - Terraform
 - Azure Kubernetes Service (AKS)
@@ -57,7 +54,7 @@ More stages coming soon as the platform evolves.
 
 ---
 
-## 🚧 Current Stage
+## Current Stage
 
 The repository currently starts with:
 
@@ -69,28 +66,23 @@ This is the simplest possible starting point for running an application on AKS.
 
 ---
 
-## How to Use This Repository
-
-1. Start with the first branch
-2. Deploy the infrastructure
-3. Understand the concept introduced
-4. Move to the next branch
-
+## Steps to take:
 ```
-replaces old context:
+terraform init
+
+terraform apply
+
+#replaces old context:
 az aks get-credentials \
   --resource-group rg-terraform-atlassian \
   --name aks-atlassian-platform \
   --overwrite-existing \
   --admin
 
-
-
 kubectl create secret generic jira-secrets \
   --from-literal=DB_USER=jirauser \
-  --from-literal=DB_PASSWORD=S4lamdonya \
+  --from-literal=DB_PASSWORD=<YOUR-PASSWORD> \
   --from-literal=DB_HOST=pg-atlassian.postgres.database.azure.com
-
 
 kubectl apply -f jira-pvc.yaml
 
@@ -98,12 +90,3 @@ kubectl apply -f jira-deployment.yaml
 
 kubectl apply -f jira-lb.yaml
 ```
-git checkout 10-lb-deploy
-```
-
----
-
-
-
----
-
