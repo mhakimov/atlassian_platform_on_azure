@@ -1,10 +1,28 @@
-# resource "azurerm_public_ip" "ingress_ip" {
-#   name                = "jira-ingress-ip"
-#   location            = azurerm_resource_group.rg.location
-#   resource_group_name = azurerm_resource_group.rg.name
-#   allocation_method   = "Static"
-#   sku                 = "Standard"
-# }
+resource "azurerm_public_ip" "ingress_ip" {
+  name     = "jira-ingress-ip"
+  location = azurerm_resource_group.rg.location
+  #   resource_group_name = azurerm_resource_group.rg.name
+  resource_group_name = azurerm_kubernetes_cluster.aks.node_resource_group
+  allocation_method   = "Static"
+  sku                 = "Standard"
+}
+
+# Ingress:
+
+# kubectl create namespace ingress-nginx
+
+# # Add the official stable repository
+# helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+# helm repo update
+
+# #Installs the NGINX Ingress Controller:
+# helm install nginx-ingress ingress-nginx/ingress-nginx \
+#   --namespace ingress-nginx \
+#   --set controller.replicaCount=2 \
+#   --set controller.service.type=LoadBalancer \
+#   --set controller.service.externalTrafficPolicy=Local
+
+# kubectl get svc -n ingress-nginx . Then create an A-record: jira.yourdomain.com → <EXTERNAL-IP>
 
 # resource "helm_release" "nginx_ingress" {
 #   name       = "nginx-ingress"
