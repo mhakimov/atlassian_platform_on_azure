@@ -39,6 +39,7 @@ Each **branch represents a learning stage**.
 | Branch | What you learn |
 |------|----------------|
 | `10-lb-deploy` | Minimal AKS cluster + Jira deployment exposed via a public LoadBalancer |
+| `20-ingress-only` | Installed Nginx Ingress controller |
 
 More stages coming soon as the platform evolves.
 

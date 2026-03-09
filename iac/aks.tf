@@ -2,22 +2,14 @@ resource "azurerm_kubernetes_cluster" "aks" {
   name                = "aks-${var.project}"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
-  # dns_prefix          = "aks-private"
 
-  # private_cluster_enabled = true
   #TODO: revert it back to Private, once I change Azur subscription or enhance vCPU limit to be able to deploy vm bastion
   dns_prefix = "aks-public"
-  #private_cluster_enabled = false
-
-  #   api_server_authorized_ip_ranges = [
-  #   "YOUR_PUBLIC_IP/32"
-  # ]
 
   default_node_pool {
     name       = "system"
     node_count = var.aks_node_count
     vm_size    = "Standard_DC2s_v3"
-    # vm_size        = "Standard_B1ms"
     vnet_subnet_id = azurerm_subnet.aks.id
 
     upgrade_settings {
@@ -44,14 +36,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     network_plugin = "azure"
     network_policy = "azure"
 
-    # outbound_type  = "userDefinedRouting"
     outbound_type = "loadBalancer"
   }
 }
 
-# Allow AKS to pull from ACR
-# resource "azurerm_role_assignment" "aks_acr_pull" {
-#   scope                = azurerm_container_registry.acr.id
-#   role_definition_name = "AcrPull"
-#   principal_id         = azurerm_kubernetes_cluster.aks.kubelet_identity[0].object_id
-# }
