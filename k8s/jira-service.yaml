@@ -2,7 +2,8 @@ apiVersion: v1
 kind: Service
 metadata:
   name: jira
-  namespace: jira
+  labels:
+    app: jira-svc
 spec:
   selector:
     app: jira
