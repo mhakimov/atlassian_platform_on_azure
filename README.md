@@ -104,11 +104,12 @@ helm install nginx-ingress ingress-nginx/ingress-nginx \
   --set controller.service.externalTrafficPolicy=Local \
   --set controller.service.loadBalancerIP="<INSERT_PUBLIC_STATIC_IP>"
 
-
+kubectl create secret generic jira-secrets \
+  --from-literal=DB_USER=jirauser \
+  --from-literal=DB_PASSWORD=<YOUR-PASSWORD> \
+  --from-literal=DB_HOST=pg-atlassian.postgres.database.azure.com
 
 kubectl apply -f ./k8s/
-
-
 
 # Access Public IP
 http://<INSERT_PUBLIC_STATIC_IP>
